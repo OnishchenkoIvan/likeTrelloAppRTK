@@ -1,9 +1,4 @@
 import {
-  AddTodolistActionType,
-  RemoveTodolistActionType,
-  SetTodolistsActionType,
-} from "./todolists-reducer";
-import {
   TaskPriorities,
   TaskStatuses,
   TaskType,
@@ -17,10 +12,35 @@ import {
   handleServerNetworkError,
 } from "utils/error-utils";
 import { appActions } from "app/app-reducer";
+import { createSlice } from "@reduxjs/toolkit";
+import { todolistsActions } from "features/TodolistsList/todolists-reducer";
 
 const initialState: TasksStateType = {};
 
-export const tasksReducer = (
+const slice = createSlice({
+  name: "tasks",
+  initialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(todolistsActions.addTodolist, (state, action) => {
+        state[action.payload.todolist.id] = [];
+      })
+      .addCase(todolistsActions.removeTodolist, (state, action) => {
+        delete state[action.payload.id];
+      })
+      .addCase(todolistsActions.setTodolists, (state, action) => {
+        action.payload.todolists.forEach((tl) => {
+          state[tl.id] = [];
+        });
+      });
+  },
+});
+
+export const tasksReducer = slice.reducer;
+export const tasksActions = slice.actions;
+
+const _tasksReducer = (
   state: TasksStateType = initialState,
   action: ActionsType
 ): TasksStateType => {
@@ -47,19 +67,6 @@ export const tasksReducer = (
           t.id === action.taskId ? { ...t, ...action.model } : t
         ),
       };
-    case "ADD-TODOLIST":
-      return { ...state, [action.todolist.id]: [] };
-    case "REMOVE-TODOLIST":
-      const copyState = { ...state };
-      delete copyState[action.id];
-      return copyState;
-    case "SET-TODOLISTS": {
-      const copyState = { ...state };
-      action.todolists.forEach((tl) => {
-        copyState[tl.id] = [];
-      });
-      return copyState;
-    }
     case "SET-TASKS":
       return { ...state, [action.todolistId]: action.tasks };
     default:
@@ -173,7 +180,4 @@ type ActionsType =
   | ReturnType<typeof removeTaskAC>
   | ReturnType<typeof addTaskAC>
   | ReturnType<typeof updateTaskAC>
-  | AddTodolistActionType
-  | RemoveTodolistActionType
-  | SetTodolistsActionType
   | ReturnType<typeof setTasksAC>;
