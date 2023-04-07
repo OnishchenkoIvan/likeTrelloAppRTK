@@ -1,7 +1,7 @@
-import { todolistsAPI, TodolistType } from "api/todolists-api";
+import { todolistsAPI, TodolistType } from "common/api/todolists-api";
 import { Dispatch } from "redux";
 import { appActions, RequestStatusType } from "app/app-reducer";
-import { handleServerNetworkError } from "utils/error-utils";
+import { handleServerNetworkError } from "common/utils/handle-server-network-error";
 import { AppThunk } from "app/store";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { clearTasksAndTodolists } from "../../common/actions/common.actions";

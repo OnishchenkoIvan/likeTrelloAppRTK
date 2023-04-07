@@ -10,18 +10,13 @@ import {
   TodolistDomainType,
   todolistsActions,
 } from "./todolists-reducer";
-import {
-  removeTaskTC,
-  TasksStateType,
-  tasksThunks,
-  updateTaskTC,
-} from "./tasks-reducer";
-import { TaskStatuses } from "api/todolists-api";
+import { removeTaskTC, TasksStateType, tasksThunks } from "./tasks-reducer";
+import { TaskStatuses } from "common/api/todolists-api";
 import { Grid, Paper } from "@mui/material";
-import { AddItemForm } from "components/AddItemForm/AddItemForm";
+import { AddItemForm } from "common/components/AddItemForm/AddItemForm";
 import { Todolist } from "./Todolist/Todolist";
 import { Navigate } from "react-router-dom";
-import { useAppDispatch } from "hooks/useAppDispatch";
+import { useAppDispatch } from "common/hooks/useAppDispatch";
 
 type PropsType = {
   demo?: boolean;
@@ -59,21 +54,29 @@ export const TodolistsList: React.FC<PropsType> = ({ demo = false }) => {
   }, []);
 
   const changeStatus = useCallback(function (
-    id: string,
+    taskId: string,
     status: TaskStatuses,
     todolistId: string
   ) {
-    const thunk = updateTaskTC(id, { status }, todolistId);
+    const thunk = tasksThunks.updateTask({
+      taskId,
+      domainModel: { status },
+      todolistId,
+    });
     dispatch(thunk);
   },
   []);
 
   const changeTaskTitle = useCallback(function (
-    id: string,
-    newTitle: string,
+    taskId: string,
+    title: string,
     todolistId: string
   ) {
-    const thunk = updateTaskTC(id, { title: newTitle }, todolistId);
+    const thunk = tasksThunks.updateTask({
+      taskId,
+      domainModel: { title },
+      todolistId,
+    });
     dispatch(thunk);
   },
   []);
