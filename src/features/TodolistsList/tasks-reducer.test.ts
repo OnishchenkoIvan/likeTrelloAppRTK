@@ -5,8 +5,8 @@ import {
   tasksThunks,
 } from "./tasks-reducer";
 
-import { TaskPriorities, TaskStatuses } from "common/api/todolists-api";
 import { todolistsActions } from "features/TodolistsList/todolists-reducer";
+import { TaskPriorities, TaskStatuses } from "../../common/enums/enums";
 
 let startState: TasksStateType = {};
 beforeEach(() => {

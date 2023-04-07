@@ -1,6 +1,4 @@
 import {
-  TaskPriorities,
-  TaskStatuses,
   TaskType,
   todolistsAPI,
   UpdateTaskArgType,
@@ -11,9 +9,9 @@ import { handleServerNetworkError } from "common/utils/handle-server-network-err
 import { appActions } from "app/app-reducer";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { todolistsActions } from "features/TodolistsList/todolists-reducer";
-import { clearTasksAndTodolists } from "../../common/actions/common.actions";
-import { createAppAsyncThunk } from "../../common/utils/create-app-async-thunk";
-import { handleServerAppError } from "../../common/utils/handle-server-app-error";
+import { clearTasksAndTodolists } from "common/actions/common.actions";
+import { createAppAsyncThunk, handleServerAppError } from "common/utils";
+import { TaskPriorities, TaskStatuses } from "../../common/enums/enums";
 
 const fetchTasks = createAppAsyncThunk<
   { tasks: TaskType[]; todolistId: string },
