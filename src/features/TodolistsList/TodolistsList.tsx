@@ -11,9 +11,9 @@ import {
   todolistsActions,
 } from "./todolists-reducer";
 import {
-  addTaskTC,
   removeTaskTC,
   TasksStateType,
+  tasksThunks,
   updateTaskTC,
 } from "./tasks-reducer";
 import { TaskStatuses } from "api/todolists-api";
@@ -54,7 +54,7 @@ export const TodolistsList: React.FC<PropsType> = ({ demo = false }) => {
   }, []);
 
   const addTask = useCallback(function (title: string, todolistId: string) {
-    const thunk = addTaskTC(title, todolistId);
+    const thunk = tasksThunks.addTask({ title, todolistId });
     dispatch(thunk);
   }, []);
 
