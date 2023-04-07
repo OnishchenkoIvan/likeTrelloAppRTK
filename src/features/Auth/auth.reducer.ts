@@ -6,6 +6,7 @@ import {
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AppThunk } from "app/store";
 import { appActions } from "app/app-reducer";
+import { clearTasksAndTodolists } from "../../common/actions/common.actions";
 
 const slice = createSlice({
   name: "auth",
@@ -47,6 +48,7 @@ export const logoutTC = (): AppThunk => (dispatch) => {
     .then((res) => {
       if (res.data.resultCode === 0) {
         dispatch(authActions.setIsLoggedIn({ isLoggedIn: false }));
+        dispatch(clearTasksAndTodolists());
         dispatch(appActions.setAppStatus({ status: "succeeded" }));
       } else {
         handleServerAppError(res.data, dispatch);
