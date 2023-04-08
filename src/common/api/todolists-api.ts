@@ -5,7 +5,7 @@ import { TaskPriorities, TaskStatuses } from "../enums/enums";
 const settings = {
   withCredentials: true,
   headers: {
-    "API-KEY": "1cdd9f77-c60e-4af5-b194-659e4ebd5d41",
+    "API-KEY": "408740c5-1e6b-42b6-a275-abc2b7556ad3",
   },
 };
 const instance = axios.create({
