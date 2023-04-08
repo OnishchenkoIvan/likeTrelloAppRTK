@@ -1,10 +1,9 @@
 import React from "react";
 import { useFormik } from "formik";
 import { useSelector } from "react-redux";
-import { loginTC } from "features/Auth/auth.reducer";
-import { AppRootStateType } from "../../app/store";
+import { loginTC } from "features/auth/auth.reducer";
 import { Navigate } from "react-router-dom";
-import { useAppDispatch } from "../../common/hooks/useAppDispatch";
+import { useAppDispatch } from "common/hooks/useAppDispatch";
 import {
   Button,
   Checkbox,
@@ -15,13 +14,12 @@ import {
   Grid,
   TextField,
 } from "@mui/material";
+import { selectIsLoggedIn } from "features/auth/auth.selectors";
 
 export const Login = () => {
   const dispatch = useAppDispatch();
 
-  const isLoggedIn = useSelector<AppRootStateType, boolean>(
-    (state) => state.auth.isLoggedIn
-  );
+  const isLoggedIn = useSelector(selectIsLoggedIn);
 
   const formik = useFormik({
     validate: (values) => {
@@ -66,7 +64,7 @@ export const Login = () => {
                 </a>
               </p>
               <p>or use common test account credentials:</p>
-              <p>Email: free@samuraijs.com</p>
+              <p> Email: free@samuraijs.com</p>
               <p>Password: free</p>
             </FormLabel>
             <FormGroup>
