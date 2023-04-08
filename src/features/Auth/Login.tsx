@@ -66,17 +66,19 @@ export const Login = () => {
                 </a>
               </p>
               <p>or use common test account credentials:</p>
-              <p> Email: free@samuraijs.com</p>
+              <p>Email: free@samuraijs.com</p>
               <p>Password: free</p>
             </FormLabel>
             <FormGroup>
               <TextField
+                InputLabelProps={{ shrink: true }}
                 label="Email"
                 margin="normal"
                 {...formik.getFieldProps("email")}
               />
               {formik.errors.email ? <div>{formik.errors.email}</div> : null}
               <TextField
+                InputLabelProps={{ shrink: true }}
                 type="password"
                 label="Password"
                 margin="normal"
