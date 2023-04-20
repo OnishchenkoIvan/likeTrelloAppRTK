@@ -6,8 +6,8 @@ import {
   handleServerAppError,
   handleServerNetworkError,
 } from "common/utils";
-import { ResultCode } from "../../common/enums";
-import { thunkTryCatch } from "../../common/utils/thunk-try-catch";
+import { ResultCode } from "common/enums";
+import { thunkTryCatch } from "common/utils/thunk-try-catch";
 
 const login = createAppAsyncThunk<{ isLoggedIn: boolean }, LoginParamsType>(
   "auth/login",
