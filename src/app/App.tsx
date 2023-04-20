@@ -29,6 +29,7 @@ function App() {
   const { initializeApp, logout } = useActions(authThunk);
 
   useEffect(() => {
+    debugger;
     initializeApp();
   }, []);
 
