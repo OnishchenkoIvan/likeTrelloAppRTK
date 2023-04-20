@@ -13,7 +13,7 @@ import {
   TextField,
 } from "@mui/material";
 import { useAppDispatch } from "common/hooks";
-import { selectIsLoggedIn } from "features/auth/auth.selectors";
+import { selectIsLoggedIn } from "features/Auth/auth.selectors";
 import { authThunk } from "../auth.reducer";
 import { LoginParamsType } from "../auth.api";
 import { ResponseType } from "../../../common/types";

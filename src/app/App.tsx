@@ -12,14 +12,14 @@ import {
   Typography,
 } from "@mui/material";
 import { Menu } from "@mui/icons-material";
-import { Login } from "../features/auth/Login/Login";
+import { Login } from "features/Auth/Login/Login";
 import "./App.css";
-import { TodolistsList } from "../features/TodolistsList/TodolistsList";
-import { ErrorSnackbar } from "../common/components";
-import { useActions } from "../common/hooks";
-import { selectIsLoggedIn } from "../features/auth/auth.selectors";
+import { TodolistsList } from "features/TodolistsList/TodolistsList";
+import { ErrorSnackbar } from "common/components";
+import { useActions } from "common/hooks";
+import { selectIsLoggedIn } from "features/Auth/auth.selectors";
 import { selectAppStatus, selectIsInitialized } from "./app.selectors";
-import { authThunk } from "../features/auth/auth.reducer";
+import { authThunk } from "features/Auth/auth.reducer";
 
 function App() {
   const status = useSelector(selectAppStatus);
