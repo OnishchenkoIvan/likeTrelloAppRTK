@@ -1,5 +1,5 @@
 import React from "react";
-import { useFormik } from "formik";
+import { FormikHelpers, useFormik } from "formik";
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 import {
@@ -14,8 +14,16 @@ import {
 } from "@mui/material";
 import { useAppDispatch } from "common/hooks";
 import { selectIsLoggedIn } from "features/auth/auth.selectors";
-import { authThunk } from "./auth.reducer";
+import { authThunk } from "../auth.reducer";
+import { LoginParamsType } from "../auth.api";
+import { ResponseType } from "../../../common/types";
+import s from "./login.module.css";
 
+type FormikErrorType = Partial<{
+  email: string;
+  password: string;
+  rememberMe: boolean;
+}>;
 export const Login = () => {
   const dispatch = useAppDispatch();
 
@@ -23,24 +31,38 @@ export const Login = () => {
 
   const formik = useFormik({
     validate: (values) => {
+      const errors: FormikErrorType = {};
       if (!values.email) {
-        return {
-          email: "Email is required",
-        };
+        errors.email = "Email is required";
+      } else if (
+        !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
+      ) {
+        errors.email = "Invalid email address";
       }
+
       if (!values.password) {
-        return {
-          password: "Password is required",
-        };
+        errors.password = "Required";
+      } else if (values.password.length < 3) {
+        errors.password = "Must be 3 characters or more";
       }
+      return errors;
     },
     initialValues: {
       email: "",
       password: "",
       rememberMe: false,
     },
-    onSubmit: (values) => {
-      dispatch(authThunk.login(values));
+    onSubmit: (values, formikHelpers: FormikHelpers<LoginParamsType>) => {
+      dispatch(authThunk.login(values))
+        .unwrap()
+        .catch((reason: ResponseType) => {
+          const { fieldsErrors } = reason;
+          if (fieldsErrors) {
+            fieldsErrors.forEach((fieldError) => {
+              formikHelpers.setFieldError(fieldError.field, fieldError.error);
+            });
+          }
+        });
     },
   });
 
@@ -74,7 +96,9 @@ export const Login = () => {
                 margin="normal"
                 {...formik.getFieldProps("email")}
               />
-              {formik.errors.email ? <div>{formik.errors.email}</div> : null}
+              {formik.touched.email && formik.errors.email && (
+                <p className={s.error}>{formik.errors.email}</p>
+              )}
               <TextField
                 InputLabelProps={{ shrink: true }}
                 type="password"
@@ -82,9 +106,9 @@ export const Login = () => {
                 margin="normal"
                 {...formik.getFieldProps("password")}
               />
-              {formik.errors.password ? (
-                <div>{formik.errors.password}</div>
-              ) : null}
+              {formik.touched.password && formik.errors.password && (
+                <p className={s.error}>{formik.errors.password}</p>
+              )}
               <FormControlLabel
                 label={"Remember me"}
                 control={
