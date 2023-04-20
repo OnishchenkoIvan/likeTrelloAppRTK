@@ -29,7 +29,7 @@ function App() {
   const { initializeApp, logout } = useActions(authThunk);
 
   useEffect(() => {
-    debugger;
+    console.log("11");
     initializeApp();
   }, []);
 
